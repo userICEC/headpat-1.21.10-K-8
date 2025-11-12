@@ -1,0 +1,40 @@
+# Создаём .gitignore для Fabric мода
+cat > .gitignore << EOF
+# Build outputs
+build/
+out/
+bin/
+dist/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.eclipse/
+
+# Runtime
+run/
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Большие файлы
+*.zip
+*.rar
+*.7z
+*.jar
+*.tar
+*.gz
+
+# Fabric специфичные
+fabric-installer/
+.gradle/loom-cache/
+EOF
