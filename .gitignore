@@ -1,0 +1,36 @@
+# Build outputs
+build/
+out/
+bin/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# Runtime files
+run/
+logs/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Fabric
+fabric-installer/
+
+echo "headpatsForKP8sourse.zip" >> .gitignore
+echo "*.zip" >> .gitignore

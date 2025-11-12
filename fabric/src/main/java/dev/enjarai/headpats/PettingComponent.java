@@ -1,0 +1,180 @@
+package dev.enjarai.headpats;
+
+import dev.enjarai.headpats.config.ModConfig;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import org.jetbrains.annotations.Nullable;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.ladysnake.cca.api.v3.component.tick.ClientTickingComponent;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+
+import java.util.UUID;
+
+public class PettingComponent implements AutoSyncedComponent, ServerTickingComponent, ClientTickingComponent {
+    // Non-persistent synced fields to keep track of states
+    @Nullable
+    private UUID petting;
+    private int incomingPetters;
+
+    // Client fields to keep track of animation
+    public int prevPettingTicks;
+    public int pettingTicks;
+    public float prevPettingMultiplier;
+    public float pettingMultiplier;
+    public int prevPettedTicks;
+    public int pettedTicks;
+    public float prevPettedMultiplier;
+    public float pettedMultiplier;
+
+    private final PlayerEntity player;
+
+    public PettingComponent(PlayerEntity player) {
+        this.player = player;
+    }
+
+    @Override
+    public void readData(ReadView readView) {
+        // Nope!
+    }
+
+    @Override
+    public void writeData(WriteView writeView) {
+        // Don't need it :3
+    }
+
+    @Override
+    public void applySyncPacket(RegistryByteBuf buf) {
+        if (buf.readBoolean()) {
+            petting = buf.readUuid();
+        } else {
+            petting = null;
+        }
+        incomingPetters = buf.readInt();
+    }
+
+    @Override
+    public void writeSyncPacket(RegistryByteBuf buf, ServerPlayerEntity recipient) {
+        buf.writeBoolean(petting != null);
+        if (petting != null) {
+            buf.writeUuid(petting);
+        }
+        buf.writeInt(incomingPetters);
+    }
+
+    @Override
+    public boolean isRequiredOnClient() {
+        return false;
+    }
+
+    @Override
+    public void serverTick() {
+        if (petting != null && player.getEntityWorld().getPlayerByUuid(petting) == null) {
+            stopPetting();
+        }
+    }
+
+    @Override
+    public void clientTick() {
+        prevPettingTicks = pettingTicks;
+        prevPettingMultiplier = pettingMultiplier;
+        if (isPetting()) {
+            pettingTicks++;
+            pettingMultiplier += (1 - pettingMultiplier) * 0.3f;
+        } else {
+            pettingMultiplier -= pettingMultiplier * 0.3f;
+            if (pettingMultiplier < 0.01f) {
+                pettingMultiplier = 0;
+                pettingTicks = 0;
+            }
+        }
+
+        // Imagine clean code :clueless:
+        prevPettedTicks = pettedTicks;
+        prevPettedMultiplier = pettedMultiplier;
+        if (isBeingPet()) {
+            if (pettedTicks % 40 == 0 && ModConfig.INSTANCE.pettedPlayersPurr) {
+                player.getEntityWorld().playSoundFromEntityClient(player, SoundEvents.ENTITY_CAT_PURR,
+                        SoundCategory.PLAYERS, 1f, player.getSoundPitch());
+            }
+
+            pettedTicks++;
+            pettedMultiplier += (1 - pettedMultiplier) * 0.3f;
+        } else {
+            pettedMultiplier -= pettedMultiplier * 0.3f;
+            if (pettedMultiplier < 0.01f) {
+                pettedMultiplier = 0;
+                pettedTicks = 0;
+            }
+        }
+    }
+
+    public void startPetting(PlayerEntity other) {
+        if (petting == null) {
+            petting = other.getUuid();
+            var server = player.getEntityWorld().getServer();
+            // Only update other player's component on server side
+            if (server != null && player instanceof ServerPlayerEntity serverPlayer) {
+                // We're on server, update both components
+                var otherComponent = Headpats.PETTING_COMPONENT.getNullable(other);
+                if (otherComponent != null) {
+                    otherComponent.incomingPetters++;
+                    // Only sync if other is also a ServerPlayerEntity
+                    if (other instanceof ServerPlayerEntity otherServerPlayer) {
+                        Headpats.PETTING_COMPONENT.sync(otherServerPlayer);
+                    }
+                }
+                Headpats.PETTING_COMPONENT.sync(serverPlayer);
+            }
+            // On client, we only update local state (petting UUID)
+            // The other player's component will be updated via sync from server
+        }
+    }
+
+    public void stopPetting() {
+        if (petting != null) {
+            var server = player.getEntityWorld().getServer();
+
+            PlayerEntity other;
+            if (server != null) {
+                other = server.getPlayerManager().getPlayer(petting);
+            } else {
+                other = player.getEntityWorld().getPlayerByUuid(petting);
+            }
+
+            if (other != null) {
+                var otherComponent = Headpats.PETTING_COMPONENT.getNullable(other);
+                if (otherComponent != null) {
+                    otherComponent.incomingPetters--;
+                    // Only sync on server side and if other is ServerPlayerEntity
+                    if (server != null && other instanceof ServerPlayerEntity otherServerPlayer) {
+                        Headpats.PETTING_COMPONENT.sync(otherServerPlayer);
+                    }
+                }
+            }
+
+            petting = null;
+            // Only sync on server side and if player is ServerPlayerEntity
+            if (server != null && player instanceof ServerPlayerEntity serverPlayer) {
+                Headpats.PETTING_COMPONENT.sync(serverPlayer);
+            }
+        }
+    }
+
+    public boolean isPetting() {
+        return petting != null;
+    }
+
+    public boolean isBeingPet() {
+        return incomingPetters > 0;
+    }
+
+    public boolean isPetting(@Nullable Entity player) {
+        return petting != null && player != null && player.getUuid().equals(petting);
+    }
+}

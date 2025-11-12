@@ -1,0 +1,8 @@
+{
+  "config.headpats.yacl.missing": "Yet Another Config Lib is not installed",
+  "config.headpats.yacl.missing.message": "YACL 3 is required to edit the config in game, would you like to install YACL 3?",
+  "config.headpats.title": "Headpat a Friend!",
+  "config.headpats.general": "General",
+  "config.headpats.general.first_person_sway_strength": "First-person sway strength",
+  "config.headpats.general.petted_players_purr": "Petted players purr"
+}

@@ -1,0 +1,5 @@
+name: headpats-sync-plugin
+version: '1.0.2+paper'
+main: dev.enjarai.headpats.Headpats
+api-version: '1.21.10'
+authors: [enjarai]

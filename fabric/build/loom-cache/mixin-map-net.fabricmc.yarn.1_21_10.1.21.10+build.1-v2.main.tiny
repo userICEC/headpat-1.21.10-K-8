@@ -1,0 +1,10 @@
+v1	named	intermediary
+FIELD	dev/enjarai/headpats/mixin/BipedEntityModelMixin	Lnet/minecraft/client/model/ModelPart;	rightArm	field_3401
+FIELD	dev/enjarai/headpats/mixin/BipedEntityModelMixin	Lnet/minecraft/client/model/ModelPart;	leftArm	field_27433
+FIELD	dev/enjarai/headpats/mixin/BipedEntityModelMixin	Lnet/minecraft/client/model/ModelPart;	head	field_3398
+METHOD	dev/enjarai/headpats/mixin/EntityMixin	()I	getId	method_5628
+METHOD	dev/enjarai/headpats/mixin/EntityMixin	(Lnet/minecraft/entity/Entity;)D	squaredDistanceTo	method_5858
+METHOD	dev/enjarai/headpats/mixin/EntityMixin	()F	getYaw	method_36454
+METHOD	dev/enjarai/headpats/mixin/EntityMixin	()F	getHeight	method_17682
+METHOD	dev/enjarai/headpats/mixin/LivingEntityMixin	()F	getScale	method_55693
+METHOD	dev/enjarai/headpats/mixin/LivingEntityMixin	()F	getScaleFactor	method_17825

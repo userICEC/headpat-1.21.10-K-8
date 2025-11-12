@@ -1,0 +1,54 @@
+{
+  "mappings": {
+    "dev/enjarai/headpats/mixin/BipedEntityModelMixin": {
+      "Lnet/minecraft/client/render/entity/model/BipedEntityModel;animateArms(Lnet/minecraft/client/render/entity/state/BipedEntityRenderState;F)V": "Lnet/minecraft/class_572;method_29353(Lnet/minecraft/class_10034;F)V",
+      "setAngles(Lnet/minecraft/client/render/entity/state/BipedEntityRenderState;)V": "Lnet/minecraft/class_572;method_17087(Lnet/minecraft/class_10034;)V"
+    },
+    "dev/enjarai/headpats/mixin/CameraMixin": {
+      "Lnet/minecraft/client/render/Camera;setRotation(FF)V": "Lnet/minecraft/class_4184;method_19325(FF)V",
+      "setRotation": "Lnet/minecraft/class_4184;method_19325(FF)V",
+      "update": "Lnet/minecraft/class_4184;method_19321(Lnet/minecraft/class_1922;Lnet/minecraft/class_1297;ZZF)V"
+    },
+    "dev/enjarai/headpats/mixin/EntityMixin": {
+      "interactAt": "Lnet/minecraft/class_1297;method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;"
+    },
+    "dev/enjarai/headpats/mixin/HeldItemRendererMixin": {
+      "Lnet/minecraft/item/ItemStack;isEmpty()Z": "Lnet/minecraft/class_1799;method_7960()Z",
+      "renderFirstPersonItem": "Lnet/minecraft/class_759;method_3228(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V"
+    },
+    "dev/enjarai/headpats/mixin/LivingEntityMixin": {
+      "Lnet/minecraft/entity/LivingEntity;handSwingProgress:F": "Lnet/minecraft/class_1309;field_6251:F",
+      "tick": "Lnet/minecraft/class_1309;method_5773()V"
+    },
+    "dev/enjarai/headpats/mixin/PlayerEntityRendererMixin": {
+      "renderArm": "Lnet/minecraft/class_1007;method_23205(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_2960;Lnet/minecraft/class_630;Z)V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "dev/enjarai/headpats/mixin/BipedEntityModelMixin": {
+        "Lnet/minecraft/client/render/entity/model/BipedEntityModel;animateArms(Lnet/minecraft/client/render/entity/state/BipedEntityRenderState;F)V": "Lnet/minecraft/class_572;method_29353(Lnet/minecraft/class_10034;F)V",
+        "setAngles(Lnet/minecraft/client/render/entity/state/BipedEntityRenderState;)V": "Lnet/minecraft/class_572;method_17087(Lnet/minecraft/class_10034;)V"
+      },
+      "dev/enjarai/headpats/mixin/CameraMixin": {
+        "Lnet/minecraft/client/render/Camera;setRotation(FF)V": "Lnet/minecraft/class_4184;method_19325(FF)V",
+        "setRotation": "Lnet/minecraft/class_4184;method_19325(FF)V",
+        "update": "Lnet/minecraft/class_4184;method_19321(Lnet/minecraft/class_1922;Lnet/minecraft/class_1297;ZZF)V"
+      },
+      "dev/enjarai/headpats/mixin/EntityMixin": {
+        "interactAt": "Lnet/minecraft/class_1297;method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;"
+      },
+      "dev/enjarai/headpats/mixin/HeldItemRendererMixin": {
+        "Lnet/minecraft/item/ItemStack;isEmpty()Z": "Lnet/minecraft/class_1799;method_7960()Z",
+        "renderFirstPersonItem": "Lnet/minecraft/class_759;method_3228(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V"
+      },
+      "dev/enjarai/headpats/mixin/LivingEntityMixin": {
+        "Lnet/minecraft/entity/LivingEntity;handSwingProgress:F": "Lnet/minecraft/class_1309;field_6251:F",
+        "tick": "Lnet/minecraft/class_1309;method_5773()V"
+      },
+      "dev/enjarai/headpats/mixin/PlayerEntityRendererMixin": {
+        "renderArm": "Lnet/minecraft/class_1007;method_23205(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;ILnet/minecraft/class_2960;Lnet/minecraft/class_630;Z)V"
+      }
+    }
+  }
+}
